@@ -1,0 +1,1 @@
+export const path:string = '/json_pointrelais_recherche'

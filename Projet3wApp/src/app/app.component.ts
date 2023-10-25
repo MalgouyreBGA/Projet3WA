@@ -10,7 +10,7 @@ export class AppComponent {
   title = 'Projet3wApp';
 
   test1(){
-    this.httpRequests.recherchePointsRelais()
+    this.httpRequests.latestNews()
   }
 
   constructor(private httpRequests:HttpRequestsService) {}

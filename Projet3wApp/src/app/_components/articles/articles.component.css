@@ -1,0 +1,17 @@
+:host{
+    background-color: lightgreen;
+    width: 100%;
+    display: flex; justify-content: space-between;
+    flex-wrap: wrap;
+    column-gap: 10px; row-gap: 10px;
+}
+.article{
+    background-color: lightyellow;
+    max-width: 300px;
+    flex: auto;
+}
+.article p {margin:0;}
+.article-data{
+    display: flex; flex-wrap: wrap;
+    column-gap: 5px; row-gap: 5px;
+}

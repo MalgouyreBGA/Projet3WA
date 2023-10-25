@@ -1,0 +1,16 @@
+<div class="article" *ngFor="let a of articles">
+    <p>{{a.title}}</p>
+    <div class="article-data">
+        <p>{{a.author}}</p>
+        <p>{{a.publishedAt | customDate}}</p>
+        <p>{{a.source.name}}</p>
+    </div>
+    
+    <img *ngIf="a.urlToImage" src="{{a.urlToImage}}" alt="" >
+
+    <p>{{a.description}}</p>
+    <p>{{a.content}}</p>
+
+    <a href="{{a.url}}">Consulter</a>.
+    
+</div>

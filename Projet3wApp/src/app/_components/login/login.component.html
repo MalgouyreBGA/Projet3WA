@@ -1,3 +1,17 @@
-<input type="text">
-<input type="text">
-<button>Login</button>
+<form #loginForm="ngForm">
+    <p>Login</p>
+    <div>
+      <label for="username">Username:</label>
+      <input type="text" id="username" name="username"
+      [(ngModel)]="form.username" required minlength="3" maxlength="30">
+    </div>
+    <div>
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password"
+        [(ngModel)]="form.password" required minlength="8" maxlength="64">
+    </div>
+    <div class="buttons">
+        <button (click)="click()">S'inscrire</button>
+        <button (click)="login()" [disabled]="!loginForm.valid">Login</button>
+    </div>
+</form>

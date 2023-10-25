@@ -6,7 +6,7 @@ import {
 } from './main/controller.js';
 import {
     validateUser
-} from '../utils/validate.js';
+} from './utils/validate.js';
 //router.route('/').post(validateCountry, recherchePointsRelais);
 export const router = express.Router();
 router.route('/newUser').post(validateUser, postNewUser);

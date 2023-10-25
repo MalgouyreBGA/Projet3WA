@@ -15,6 +15,7 @@
             [(ngModel)]="form.password2" required minlength="8" maxlength="64"
             (ngModelChange)="onValueChange()">
         </div>
+        <p>Password must contain at least one uppercase letter, one digit, and one special character'</p>
     <div class="buttons">
         <button (click)="click()">retour</button>
         <button (click)="inscription()"

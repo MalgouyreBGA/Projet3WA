@@ -1,6 +1,19 @@
 import bcrypt from "bcrypt"
 import mongoose from "mongoose";
-mongoose.connect('mongodb://localhost:27017/projet3WAdb', { useNewUrlParser: true });
+mongoose.connect('mongodb://127.0.0.1:27017/projet3WAdb', { useNewUrlParser: true });
+//                              host  port  db.name
+// "Listening on","attr":{"address":"127.0.0.1"}}
+// sg":"Waiting for connections","attr":{"port":27017,"ssl":"off"}}
+
+mongoose.connection.on('connected', () => {
+  console.log('Mongoose connected to MongoDB');
+});
+mongoose.connection.on('error', (err) => {
+  console.error('Mongoose connection error:', err);
+});
+mongoose.connection.on('disconnected', () => {
+  console.log('Mongoose disconnected from MongoDB');
+});
 
 export const errorCodes = {
   unique:   1,
@@ -46,31 +59,33 @@ const articleSchema = new Schema({
 // security ______________________________________________
 
 userSchema.pre('save', function (next) {
-    const user = this;
-    if (!user.isModified('password')) { return next();}
+  const user = this;
+  if (!user.isModified('password')) { return next();}
 
-    bcrypt.genSalt(10, (err, salt) => {
+  bcrypt.genSalt(10, (err, salt) => {
+    if (err) { return next(err);}
+    bcrypt.hash(user.password, salt, (err, hash) => {
         if (err) { return next(err);}
-        bcrypt.hash(user.password, salt, (err, hash) => {
-            if (err) { return next(err);}
-            user.password = hash;
-            next();
-        });
+        user.password = hash;
+        next();
     });
+  });
 });
 async function bcryptTest (password, user){
+  return new Promise((resolve, reject) => {
     bcrypt.compare(password, user.password, (err, isMatch) => {
-        if (err) {
-          console.error('Error comparing passwords:', err);
-          return errorCodes.bcrypt
-        } else if (isMatch) {
-          console.log('Password is correct');
-          return user
-        } else {
-          console.log('Password is incorrect');
-          return errorCodes.wrongPassword
-        }
+      if (err) {
+        console.error('Error comparing passwords:', err);
+        reject(errorCodes.bcrypt)
+      } else if (isMatch) {
+        console.log('Password is correct');
+        resolve(true)
+      } else {
+        console.log('Password is incorrect');
+        resolve(false)
+      }
     });
+  })
 }
 
 // models _______________________________________________
@@ -79,47 +94,51 @@ const User = mongoose.model('User', userSchema);
 const Favoris = mongoose.model('Favoris', favorisSchema);
 const Article = mongoose.model('Article', articleSchema);
 
-// functions User
+
+// functions User :
+
 export async function newUser(username, password){
-    const newUser = new User({
-        username: username,
-        password: password,
-        country:  "fr",
-    });
-    return await newUser.save((err, user) => {
-        if (err && err.code === 11000) {
-            // 11000 is the MongoDB error code for duplicate key
-            console.error('Duplicate username. User with this username already exists.');
-            return errorCodes.unique
-        } else if (err) {console.error(err); return errorCodes.mongoose;
-        } else {
-            console.log('User saved successfully.');
-            return true
-        }
-    });
+  const newUser = new User({
+      username: username,
+      password: password,
+      country:  "fr",
+  });
+  
+  try {
+    const user = await newUser.save();
+    console.log('User saved successfully.');
+    return true;
+  } catch (err) {
+    if (err.code === 11000) {
+      // 11000 is the MongoDB error code for duplicate key
+      console.error('Duplicate username. User with this username already exists.', errorCodes.unique);
+      return errorCodes.unique;
+    } else {
+      console.error(err);
+      return errorCodes.mongoose;
+    }
+  }
 }
+
 export async function findUser(username, password){
-    return await newUser.findOne({
-        username: username,
-    }, (err, user) => {
-        if (err) { console.error(err); return errorCodes.mongoose; }
-      
-        if (user) {
-          // User with the provided username and password exists
-          console.log('User found:', user);
-          return bcryptTest (password, user)
-        } else {
-          // No user found with the provided username and password
-          console.log('User not found');
-          return errorCodes.notFound;
-        }
-    })
+    try {
+      const user = await User.findOne({ username: username });
+      if (user) {
+        // User with the provided username exists
+        console.log('User found:', user.username, user.country, user._id);
+        return await bcryptTest (password, user) // compare passwords
+      } else {
+        // No user found with the provided username
+        console.log('User not found');
+        return errorCodes.notFound;
+      }
+    } catch (err) { if (err) {return errorCodes.mongoose } }
 }
 export async function updateUserCountry( id, country ){
     const filter  = { _id: id }
     const update  = { country: country }
     const options = { new: true };
-    return await newUser.findOneAndUpdate(filter, update, options, (err, updatedUser) => {
+    return await User.findOneAndUpdate(filter, update, options, (err, updatedUser) => {
         if (err) { console.error(err); return errorCodes.mongoose;}
       
         if (updatedUser) {

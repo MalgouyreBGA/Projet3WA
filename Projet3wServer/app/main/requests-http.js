@@ -1,20 +1,16 @@
 import fetch from 'node-fetch';
-import dotenv from 'dotenv';
 
-dotenv.config();
+import { config } from '../utils/config.js';
 
 // ------------- default values -------------------------------
-
-const baseUrl = "https://newsapi.org/v2"
-const apiKeyNews = process.env.API_KEY;
 
 function addToBaseUrl(urlSection, toAdd){
     let add = Object.keys(toAdd).map(key => {
         return key + "=" + toAdd[key]
     })
-    add.push("apiKey=" + apiKeyNews)
+    add.push("apiKey=" + config.apiKeyNews)
     add=add.join("&")
-    return baseUrl + urlSection + '?' + add
+    return config.baseUrl + urlSection + '?' + add
 }
 //{ ...body,  }
 // ------------- error ---------------------------------------

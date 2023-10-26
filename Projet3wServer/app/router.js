@@ -11,6 +11,7 @@ import {
 export const router = express.Router();
 router.route('/newUser').post(validateUser, postNewUser);
 router.route('/login').post(validateUser, login);
+router.route('/logout').post();
 router.route('/preferences').put();
 
 router.route('/').get(getLastNews);

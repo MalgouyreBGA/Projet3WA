@@ -1,0 +1,15 @@
+:host {
+    height: 100vh;
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: 50px 1fr;
+    grid-gap: 10px
+}
+:host app-navbar {
+    grid-column: 1;
+    grid-row: 1;
+}
+:host app-login-page, :host app-home-page {
+    grid-column: 1;
+    grid-row: 2;
+}

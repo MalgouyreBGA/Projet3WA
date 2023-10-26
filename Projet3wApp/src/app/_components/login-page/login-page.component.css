@@ -1,0 +1,5 @@
+app-root app-login-page:host  {
+    grid-column: 1;
+    grid-row: 2;
+    display: flex; justify-content: center; align-items: center;
+}

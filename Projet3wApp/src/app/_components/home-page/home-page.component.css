@@ -1,0 +1,4 @@
+app-root app-home-page:host {
+    grid-column: 1;
+    grid-row: 2;
+}

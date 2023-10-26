@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { HttpRequestsService } from './_services/http-requests/http-requests.service';
 
 @Component({
   selector: 'app-root',
@@ -8,10 +7,4 @@ import { HttpRequestsService } from './_services/http-requests/http-requests.ser
 })
 export class AppComponent {
   title = 'Projet3wApp';
-
-  test1(){
-    this.httpRequests.latestNews()
-  }
-
-  constructor(private httpRequests:HttpRequestsService) {}
 }

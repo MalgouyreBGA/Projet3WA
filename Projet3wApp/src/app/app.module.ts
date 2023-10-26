@@ -16,6 +16,8 @@ import { ArticlesComponent } from './_components/articles/articles.component';
 import { CustomDatePipe } from './_pipe/custom-date.pipe';
 import { RegisterComponent } from './_components/register/register.component';
 import { LoginCoComponent } from './_components/login-co/login-co.component';
+import { LoginPageComponent } from './_components/login-page/login-page.component';
+import { HomePageComponent } from './_components/home-page/home-page.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +27,9 @@ import { LoginCoComponent } from './_components/login-co/login-co.component';
     ArticlesComponent,
     CustomDatePipe,
     RegisterComponent,
-    LoginCoComponent
+    LoginCoComponent,
+    LoginPageComponent,
+    HomePageComponent
   ],
   imports: [
     BrowserModule,

@@ -1,14 +1,17 @@
 :host{
-    background-color: lightgreen;
-    width: 100%;
+    background-color: transparent;
+    height: 100%;
     display: flex; justify-content: space-between;
     flex-wrap: wrap;
     column-gap: 10px; row-gap: 10px;
+    padding: 10px;
 }
 .article{
-    background-color: lightyellow;
-    max-width: 300px;
+    background-color: lightsteelblue; border-radius: 8px;
+    max-width: 400px;
     flex: auto;
+    padding: 10px; border-radius: 10px;
+    display: flex; flex-direction: column; justify-content: space-between;
 }
 .article p {margin:0;}
 .article-data{

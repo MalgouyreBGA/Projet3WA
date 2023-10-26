@@ -1,6 +1,7 @@
 :host{
     height:50px;
     width: 100%;
-    display: block;
+    display: flex; justify-content: flex-end; align-items: center;
     background-color: lightgray;
 }
+:host button{background-color: transparent; margin: 10px;}

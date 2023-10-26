@@ -8,9 +8,8 @@
     
     <img *ngIf="a.urlToImage" src="{{a.urlToImage}}" alt="" >
 
-    <p>{{a.description}}</p>
-    <p>{{a.content}}</p>
+    <p *ngIf="a.description">{{a.description}}</p>
+    <p *ngIf="a.content">{{a.content}}</p>
 
-    <a href="{{a.url}}">Consulter</a>.
-    
+    <a href="{{a.url}}">Consulter</a>
 </div>

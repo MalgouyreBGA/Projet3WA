@@ -2,9 +2,13 @@ import {
     getNews,
 } from "./requests.js";
 import {
+    errorCodes,
     newUser, findUser, updateUserCountry,
 } from "./mongo.js"
-import { errorCodes } from "./mongo.js";
+import {
+    generateToken, storeToken, verifyToken,
+    authenticateRequest, revokeToken, isTokenRevoked
+} from "./tokens.js" 
 
 export const postNewUser = async (req, res) => {
     console.log("controller postNewUser")
@@ -14,7 +18,7 @@ export const postNewUser = async (req, res) => {
     } else if (result === errorCodes.mongoose) {
         res.status(500).send("Internal server error");
     } else {
-      res.send(result); // Handle the successful case (user found) here.
+        res.send(result); // Handle the successful case (user found) here.
     }
 }
 export const login = async (req, res) => {
@@ -25,7 +29,15 @@ export const login = async (req, res) => {
     } else if (result === errorCodes.mongoose) {
         res.status(500).send("Internal server error");
     } else {
-      res.send(result); // Handle the successful case (user found) here.
+        if (result){
+            // Handle the successful case (user found) here.
+            const token = generateToken(result)
+            storeToken(result._id, token)
+            console.log(token)
+            res.send({token: token});
+        } else {
+            res.send(result); // <= false
+        }
     }
   };
 export const putUser = async (req, res) => {
@@ -34,11 +46,12 @@ export const putUser = async (req, res) => {
 }
 
 export const getLastNews = async (req, res) => {
-    console.log("controller getNews")
-    const result = await getNews()
-    if (result){
-        res.send(result);
-    } else {
-        res.status(500).send("Internal server error");
+    if (true) { //authenticateRequest(req, res, next)
+        const result = await getNews()
+        if (result){
+            res.send(result);
+        } else {
+            res.status(500).send("Internal server error");
+        }
     }
 }

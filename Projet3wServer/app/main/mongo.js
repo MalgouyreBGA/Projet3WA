@@ -79,7 +79,7 @@ async function bcryptTest (password, user){
         reject(errorCodes.bcrypt)
       } else if (isMatch) {
         console.log('Password is correct');
-        resolve(true)
+        resolve(user)
       } else {
         console.log('Password is incorrect');
         resolve(false)

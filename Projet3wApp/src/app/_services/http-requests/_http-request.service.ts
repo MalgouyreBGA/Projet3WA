@@ -20,10 +20,8 @@ postLogin(addUrl:string, body:any/*, headers:any*/){
     this.http.post<any>(fullUrl, body /*, { headers }*/)
     .subscribe({
       next: (data:any) => {
-        console.log("next", data)
         const { token, ...rest } = data;
         if(token){this.token = token}
-        console.log(this.token)
         resolve(token ? true : false)
       },
       error: (error:any) => {

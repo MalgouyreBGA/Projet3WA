@@ -1,11 +1,11 @@
 <form #inscriptionForm="ngForm">
     <p>Inscription</p>
-    <div>
+    <div class="input">
       <label for="username">Username:</label>
       <input type="text" id="username" name="username"
         [(ngModel)]="form.username" required minlength="3" maxlength="30">
     </div>
-    <div>
+    <div class="input">
         <label for="password">Mot de passe :</label>
         <input type="password" id="password" name="password"
             [(ngModel)]="form.password" required minlength="8" maxlength="64"
@@ -14,8 +14,8 @@
         <input type="password" id="password2" name="password2"
             [(ngModel)]="form.password2" required minlength="8" maxlength="64"
             (ngModelChange)="onValueChange()">
-        </div>
-        <p>Password must contain at least one uppercase letter, one digit, and one special character'</p>
+    </div>
+    <p class="bloc-text">Le mot de passe doit contenir au moins une majuscule, un nombre et un caractere special.</p>
     <div class="buttons">
         <button (click)="click()">retour</button>
         <button (click)="inscription()"

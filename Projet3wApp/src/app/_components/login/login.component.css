@@ -2,7 +2,10 @@
     display: flex; justify-content: flex-start; align-items: center;
     flex-direction: column; row-gap: 10px;
 }
-form {display:content;}
+form {display:contents;}
+:host .input {
+    display: flex; flex-direction:column;
+}
 :host .buttons {
     margin-top: 10px;
     display: flex; justify-content: space-between; column-gap: 10px;

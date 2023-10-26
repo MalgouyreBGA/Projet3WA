@@ -1,11 +1,11 @@
 <form #loginForm="ngForm">
     <p>Login</p>
-    <div>
+    <div class="input">
       <label for="username">Username:</label>
       <input type="text" id="username" name="username"
       [(ngModel)]="form.username" required minlength="3" maxlength="30">
     </div>
-    <div>
+    <div class="input">
       <label for="password">Password:</label>
       <input type="password" id="password" name="password"
         [(ngModel)]="form.password" required minlength="8" maxlength="64">
